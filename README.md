@@ -29,6 +29,11 @@ In short: EOAs can temporarily behave like programmable accounts through delegat
 
 ```text
 .
+├── .github/
+│   └── workflows/
+│       ├── ci.yml
+│       ├── release.yml
+│       └── vulncheck.yml
 ├── docs/
 │   └── IMPLEMENTATION_NOTES.md
 ├── examples/
@@ -55,6 +60,9 @@ In short: EOAs can temporarily behave like programmable accounts through delegat
 │       ├── client.go
 │       ├── client_test.go
 │       └── types.go
+├── scripts/
+│   └── build-release.sh
+├── Makefile
 ├── go.mod
 └── README.md
 ```
@@ -101,6 +109,39 @@ go run ./examples/basic-authorization
 go run ./examples/transaction-batching
 go run ./examples/send-userop
 ```
+
+### 4. Run full local CI
+
+```bash
+make ci
+```
+
+## CI/CD
+
+This project includes three GitHub Actions workflows:
+
+- **CI** (`.github/workflows/ci.yml`)
+  - Triggered on pull requests and pushes to `main` / `master`
+  - Runs format checks, module tidy check, vet, race tests, build, and example runs
+- **Release CD** (`.github/workflows/release.yml`)
+  - Triggered on tags matching `v*` (for example `v0.1.0`)
+  - Builds cross-platform example binaries and publishes release artifacts
+- **Vulnerability Scan** (`.github/workflows/vulncheck.yml`)
+  - Weekly scheduled `govulncheck` + manual run support
+
+### Release process
+
+1. Push a semantic tag:
+
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+2. The release workflow will:
+  - Build artifacts for `linux`, `darwin`, and `windows`
+  - Generate `dist/checksums.txt`
+  - Publish assets to a GitHub Release
 
 ## Example Walkthroughs
 
