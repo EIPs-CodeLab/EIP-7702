@@ -13,3 +13,6 @@ bin/
 # Local Go caches (used for sandbox-safe testing)
 .gocache/
 .gomodcache/
+
+# Build outputs
+dist/
