@@ -1,0 +1,15 @@
+# Binaries
+bin/
+*.exe
+*.out
+
+# IDE
+.vscode/
+.idea/
+
+# Environment
+.env
+
+# Local Go caches (used for sandbox-safe testing)
+.gocache/
+.gomodcache/
